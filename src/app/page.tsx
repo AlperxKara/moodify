@@ -1,103 +1,194 @@
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen bg-gradient-to-br from-purple-700 via-purple-600 to-purple-500">
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="text-left">
+            <h1 className="text-6xl font-bold text-white mb-6 leading-tight">
+              Ruh Halinize Göre<br />
+              <span className="text-yellow-300">Müzik ve Film</span>
+            </h1>
+            <p className="text-xl text-white/90 mb-8 leading-relaxed">
+              Moodify ile ruh halinize uygun içerikler keşfedin, benzer ruh halindeki kullanıcılarla bağlantı kurun ve kişiselleştirilmiş öneriler alın.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/auth/login"
+                className="bg-yellow-300 text-purple-700 px-8 py-4 rounded-full font-semibold hover:bg-yellow-400 transition-all text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Giriş Yap
+              </Link>
+              <Link
+                href="/auth/register"
+                className="bg-transparent border-2 border-yellow-300 text-yellow-300 px-8 py-4 rounded-full font-semibold hover:bg-yellow-300/10 transition-all text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                Kayıt Ol
+              </Link>
+            </div>
+          </div>
+          <div className="relative h-[500px] hidden md:block">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/20 to-purple-400/20 rounded-3xl backdrop-blur-sm">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-64 h-64 bg-yellow-300/10 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="bg-purple-800/30 backdrop-blur-sm py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-yellow-300 text-center mb-12">Özellikler</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-purple-700/30 backdrop-blur-sm p-6 rounded-2xl hover:bg-purple-600/30 transition-all border border-yellow-300/20">
+              <div className="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Ruh Hali Analizi</h3>
+              <p className="text-white/80">Gelişmiş algoritmalar ile ruh halinizi analiz edin ve size özel içerikler keşfedin.</p>
+            </div>
+            <div className="bg-purple-700/30 backdrop-blur-sm p-6 rounded-2xl hover:bg-purple-600/30 transition-all border border-yellow-300/20">
+              <div className="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Sosyal Eşleştirme</h3>
+              <p className="text-white/80">Benzer ruh halindeki kullanıcılarla bağlantı kurun ve içeriklerinizi paylaşın.</p>
+            </div>
+            <div className="bg-purple-700/30 backdrop-blur-sm p-6 rounded-2xl hover:bg-purple-600/30 transition-all border border-yellow-300/20">
+              <div className="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Kişiselleştirilmiş İçerik</h3>
+              <p className="text-white/80">Spotify ve Netflix entegrasyonu ile size özel oynatma listeleri oluşturun.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How It Works Section */}
+      <div className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-yellow-300 text-center mb-12">Nasıl Çalışır?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-purple-700">1</span>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Hesap Oluştur</h3>
+              <p className="text-white/80">Hızlı ve kolay bir şekilde hesabınızı oluşturun.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-purple-700">2</span>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Ruh Halinizi Seçin</h3>
+              <p className="text-white/80">Günlük ruh halinizi belirleyin ve analiz edin.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-purple-700">3</span>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">İçerik Keşfedin</h3>
+              <p className="text-white/80">Size özel müzik ve film önerileri alın.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-purple-700">4</span>
+              </div>
+              <h3 className="text-xl font-semibold text-yellow-300 mb-2">Bağlantı Kurun</h3>
+              <p className="text-white/80">Benzer ruh halindeki kullanıcılarla tanışın.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Premium Features Section */}
+      <div className="bg-purple-800/30 backdrop-blur-sm py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-yellow-300 text-center mb-12">Premium Özellikler</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-purple-700/30 backdrop-blur-sm p-8 rounded-2xl border border-yellow-300/20">
+              <h3 className="text-2xl font-bold text-yellow-300 mb-4">Ücretsiz Plan</h3>
+              <ul className="space-y-4 text-white/80">
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Temel ruh hali analizi
+                </li>
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Sınırlı içerik önerileri
+                </li>
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Temel eşleştirme
+                </li>
+              </ul>
+            </div>
+            <div className="bg-purple-700/30 backdrop-blur-sm p-8 rounded-2xl border-2 border-yellow-300">
+              <h3 className="text-2xl font-bold text-yellow-300 mb-4">Premium Plan</h3>
+              <ul className="space-y-4 text-white/80">
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Gelişmiş ruh hali analizi
+                </li>
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Sınırsız içerik önerileri
+                </li>
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Öncelikli eşleştirme
+                </li>
+                <li className="flex items-center">
+                  <svg className="w-5 h-5 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Özel oynatma listeleri
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-yellow-300 mb-8">Hemen Başlayın</h2>
+          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+            Ruh halinize göre kişiselleştirilmiş içerikler keşfetmek için hemen ücretsiz hesap oluşturun.
+          </p>
+          <Link
+            href="/auth/register"
+            className="inline-block bg-yellow-300 text-purple-700 px-8 py-4 rounded-full font-semibold hover:bg-yellow-400 transition-all text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          >
+            Ücretsiz Hesap Oluştur
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 }
