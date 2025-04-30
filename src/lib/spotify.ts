@@ -20,15 +20,16 @@ export interface SpotifyTrack {
   };
 }
 
-const CLIENT_ID = 'ba158563d9364b2a95e3e59154f6fc72';
-const REDIRECT_URI = 'http://localhost:3000/dashboard';
-const SCOPES = 'user-read-private user-read-email streaming';
+const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || 'ba158563d9364b2a95e3e59154f6fc72';
+const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET || '53bebceaa61d4c49a2aeee7dc5076e25';
+const REDIRECT_URI = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI || 'http://localhost:3000/api/auth/callback/spotify';
+const SCOPES = 'user-read-private user-read-email streaming playlist-read-private';
 
 // 1. Spotify Auth URL oluşturucu
 export const getSpotifyAuthUrl = () => {
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
-    response_type: 'token',
+    response_type: 'code',
     redirect_uri: REDIRECT_URI,
     scope: SCOPES,
     show_dialog: 'true'
@@ -50,13 +51,27 @@ export const checkSpotifyToken = (): boolean => {
   return !!localStorage.getItem('spotify_token');
 };
 
+// Spotify'ın desteklediği türler listesi
+const SPOTIFY_GENRES = [
+  'pop', 'rock', 'dance', 'classical', 'ambient', 'piano', 'metal', 'jazz',
+  'acoustic', 'folk', 'house', 'edm', 'blues', 'country', 'hip-hop', 'r-n-b',
+  'soul', 'techno', 'trance', 'reggae', 'punk', 'funk', 'disco', 'gospel',
+  'opera', 'soundtracks', 'world-music', 'alternative', 'children', 'chill',
+  'electronic', 'hard-rock', 'indie-pop', 'k-pop', 'latino', 'minimal-techno',
+  'reggaeton', 'singer-songwriter', 'ska', 'songwriter', 'spanish', 'study', 'summer'
+];
+
 // 3. Duyguya göre genre seçici (sadece desteklenenler)
 const getMoodBasedGenres = (valence: number, energy: number): string[] => {
-  if (valence > 0.7 && energy > 0.7) return ['pop', 'dance', 'house'];
-  if (valence < 0.3 && energy < 0.3) return ['classical', 'ambient', 'piano'];
-  if (valence < 0.3 && energy > 0.7) return ['rock', 'metal', 'jazz'];
-  if (valence > 0.7 && energy < 0.3) return ['jazz', 'acoustic', 'folk'];
-  return ['pop', 'rock', 'indie'];
+  let genres: string[] = [];
+  if (valence > 0.7 && energy > 0.7) genres = ['pop', 'dance', 'house'];
+  else if (valence < 0.3 && energy < 0.3) genres = ['classical', 'ambient', 'piano'];
+  else if (valence < 0.3 && energy > 0.7) genres = ['rock', 'metal', 'jazz'];
+  else if (valence > 0.7 && energy < 0.3) genres = ['jazz', 'acoustic', 'folk'];
+  else genres = ['pop', 'rock', 'dance'];
+  // Sadece desteklenen türleri döndür
+  const filtered = genres.filter(g => SPOTIFY_GENRES.includes(g));
+  return filtered.length > 0 ? filtered : ['pop'];
 };
 
 // 4. Duygu stringinden parametreye çevirici
@@ -78,7 +93,10 @@ export const mapEmotionToMusicParams = (emotion: string): EmotionToMusicParams =
 export const getRecommendationsByEmotion = async (params: EmotionToMusicParams): Promise<SpotifyTrack[]> => {
   try {
     const token = getSpotifyToken();
-    if (!token) throw new Error('Spotify bağlantısı gerekiyor. Lütfen tekrar giriş yapın.');
+    if (!token || token === 'undefined' || token === '') {
+      console.error('Spotify token bulunamadı veya geçersiz!');
+      throw new Error('Spotify bağlantısı gerekiyor. Lütfen tekrar giriş yapın.');
+    }
     let genres = getMoodBasedGenres(params.valence, params.energy);
     let searchParams = new URLSearchParams({
       seed_genres: genres.join(','),
@@ -86,9 +104,6 @@ export const getRecommendationsByEmotion = async (params: EmotionToMusicParams):
       target_energy: params.energy.toString(),
       limit: (params.limit || 10).toString()
     });
-    if (params.market) {
-      searchParams.append('market', params.market);
-    }
 
     let response = await fetch(`https://api.spotify.com/v1/recommendations?${searchParams}`, {
       headers: {
@@ -99,6 +114,7 @@ export const getRecommendationsByEmotion = async (params: EmotionToMusicParams):
 
     if (!response.ok) {
       const text = await response.text();
+      console.error('Spotify API hata cevabı:', text);
       let errorMessage = `Spotify API hatası: ${response.status}`;
       if (text) {
         errorMessage += ` - ${text}`;
